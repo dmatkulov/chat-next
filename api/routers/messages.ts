@@ -6,8 +6,9 @@ const messagesRouter = Router();
 
 messagesRouter.get('/', async (req, res, next) => {
   try {
-    const messages = await messageDb.getItem();
-    res.send(messages);
+    const allMessages = await messageDb.getItem();
+    const latestMessages = allMessages.slice(-30);
+    res.send(latestMessages);
   } catch (e) {
     next(e);
   }
