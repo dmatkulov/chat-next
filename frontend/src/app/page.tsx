@@ -19,8 +19,9 @@ export default function Home() {
     queryKey: ['messages'],
     queryFn: async () => {
       const messagesResponse = await axiosApi.get<MessageApi[]>('/messages');
-      return messagesResponse.data;
-    }
+      return messagesResponse.data.reverse();
+    },
+    refetchInterval: 2000,
   });
   
   let content: React.ReactNode = <Skeleton/>;
