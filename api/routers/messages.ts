@@ -1,14 +1,33 @@
 import {Router} from 'express';
 import messageDb from '../messageDb';
-import {Message} from '../types';
+import {Message, MessageApi} from '../types';
 
 const messagesRouter = Router();
 
 messagesRouter.get('/', async (req, res, next) => {
   try {
     const allMessages = await messageDb.getItem();
-    const latestMessages = allMessages.slice(-30);
-    res.send(latestMessages);
+    let latest: MessageApi[] = [];
+    
+    const queryDate = req.query.datetime as string;
+    
+    if (queryDate !== undefined) {
+      const date = new Date(queryDate);
+      
+      if (isNaN(date.getDate())) {
+        return res.status(400).send({error: 'Invalid date format'});
+      }
+      const filteredByDate = allMessages.filter(message => {
+        console.log(message.datetime);
+        console.log('date, ', date);
+        return new Date(message.datetime) > date;
+      });
+      latest = filteredByDate.slice(-30);
+    } else {
+      latest = allMessages.slice(-30);
+    }
+    
+    res.send(latest);
   } catch (e) {
     next(e);
   }

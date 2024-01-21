@@ -3,3 +3,6 @@
 # dependencies
 node_modules
 .idea
+db.json
+api.iml
+modules.xml
