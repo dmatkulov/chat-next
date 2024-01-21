@@ -1,10 +1,12 @@
 'use client';
 import ChatForm from '@/src/components/UI/ChatForm/ChatForm';
-import {useMutation} from '@tanstack/react-query';
-import {Message} from '@/src/types';
+import {useMutation, useQuery} from '@tanstack/react-query';
+import {Message, MessageApi} from '@/src/types';
 import axiosApi from '@/src/axiosApi';
-import {Divider, Grid, List, Typography} from '@mui/material';
+import {Grid, List, ListItem} from '@mui/material';
 import ChatItem from '@/src/components/UI/ChatItem/ChatItem';
+import React from 'react';
+import Skeleton from '@/src/components/UI/ChatItem/Skeleton';
 
 export default function Home() {
   const mutation = useMutation({
@@ -13,24 +15,45 @@ export default function Home() {
     }
   });
   
+  const {data: messages, isLoading} = useQuery({
+    queryKey: ['messages'],
+    queryFn: async () => {
+      const messagesResponse = await axiosApi.get<MessageApi[]>('/messages');
+      return messagesResponse.data;
+    }
+  });
+  
+  let content: React.ReactNode = <Skeleton/>;
+  
+  if (!isLoading && messages) {
+    content = messages.map((message) => (
+      <ListItem key={message.id}>
+        <ChatItem message={message}></ChatItem>
+      </ListItem>
+    ));
+  }
   const onSubmit = async (messageData: Message) => {
     await mutation.mutateAsync(messageData);
   };
   return (
     <>
-      <Grid container>
-        <Grid item xs >
-          <Typography variant="h5"
+      <Grid container direction="column" height="70vh">
+        <Grid
+          item
+          xs={9}
+          sx={{
+          overflowY: 'auto'
+        }}
+        >
+          <List
+            sx={{
+              width: '100%',
+              backgroundColor: '#f6f6f6'
+          }}
           >
-            Chat
-          </Typography>
+            {content}
+          </List>
         </Grid>
-      </Grid>
-      <Grid container direction="column">
-        <List sx={{ width: '100%', backgroundColor: '#f6f6f6'}}>
-          <ChatItem/>
-        </List>
-        <Divider />
         <ChatForm
           isLoading={mutation.isPending}
           onSubmit={onSubmit}

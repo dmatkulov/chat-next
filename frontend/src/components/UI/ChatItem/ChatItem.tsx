@@ -1,20 +1,24 @@
 import React from 'react';
-import {Grid, ListItem, ListItemText} from '@mui/material';
+import {Grid, ListItemText} from '@mui/material';
+import dayjs from 'dayjs';
+import {MessageApi} from '@/src/types';
 
-const ChatItem = () => {
+interface Props {
+  message: MessageApi;
+}
+const ChatItem: React.FC<Props> = ({message}) => {
+  const formattedDate = dayjs(message.datetime).format('DD.MM.YYYY, HH:mm');
   return (
-    <div>
-      <ListItem key="1">
-        <Grid container>
-          <Grid item xs={12}>
-            <ListItemText primary="Hey man, What's up ?"></ListItemText>
-          </Grid>
-          <Grid item xs={12}>
-            <ListItemText secondary="09:30"> {" — I'll be in your neighborhood doing errands this…"}</ListItemText>
-          </Grid>
+    <>
+      <Grid container>
+        <Grid item xs={12}>
+          <ListItemText primary={message.author}></ListItemText>
         </Grid>
-      </ListItem>
-    </div>
+        <Grid item xs={12}>
+          <ListItemText secondary={formattedDate}> {message.message}</ListItemText>
+        </Grid>
+      </Grid>
+    </>
   );
 };
 
