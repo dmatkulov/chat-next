@@ -1,10 +1,10 @@
 'use client';
-import { Container, CssBaseline, ThemeProvider } from '@mui/material';
+import {Container, CssBaseline, ThemeProvider} from '@mui/material';
 import theme from '@/src/theme';
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
+import {AppRouterCacheProvider} from '@mui/material-nextjs/v13-appRouter';
 import AppToolbar from '@/src/components/UI/AppToolbar/AppToolbar';
 import React from 'react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 
 const queryClient = new QueryClient();
 
@@ -19,7 +19,7 @@ export default function RootLayout({
         <QueryClientProvider client={queryClient}>
           <CssBaseline/>
           <html lang="en">
-          <body>
+          <body style={{backgroundColor: '#eeee'}}>
           <header>
             <AppToolbar/>
           </header>

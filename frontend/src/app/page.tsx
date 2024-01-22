@@ -3,10 +3,11 @@ import ChatForm from '@/src/components/UI/ChatForm/ChatForm';
 import {useMutation, useQuery} from '@tanstack/react-query';
 import {Message, MessageApi} from '@/src/types';
 import axiosApi from '@/src/axiosApi';
-import {Grid, List, ListItem} from '@mui/material';
+import {Grid, List, ListItem, Typography} from '@mui/material';
 import ChatItem from '@/src/components/UI/ChatItem/ChatItem';
 import React from 'react';
 import Skeleton from '@/src/components/UI/ChatItem/Skeleton';
+import {blue} from '@mui/material/colors';
 
 export default function Home() {
   const mutation = useMutation({
@@ -38,19 +39,40 @@ export default function Home() {
   };
   return (
     <>
-      <Grid container direction="column" height="70vh">
+      <Grid
+        container
+        direction="column"
+        justifyContent="space-between"
+        sx={{
+          backgroundColor: 'white',
+          height: '50vh',
+          paddingBottom: 2,
+          paddingTop: 2,
+          borderRadius: 2,
+        }}>
+        <Typography
+          variant="h6"
+          sx={{
+            px: 2,
+            color: blue[700]
+          }}>
+          ChatApp
+        </Typography>
         <Grid
           item
           xs={9}
           sx={{
-          overflowY: 'auto'
-        }}
+            overflowY: 'auto',
+            borderBottom: 1,
+            borderTop: 1,
+            borderColor: '#eee',
+            flexGrow: 1,
+          }}
         >
           <List
             sx={{
               width: '100%',
-              backgroundColor: '#f6f6f6'
-          }}
+            }}
           >
             {content}
           </List>
