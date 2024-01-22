@@ -19,10 +19,10 @@ const ChatForm: React.FC<Props> = ({isLoading, onSubmit}) => {
   const handleSubmitForm = (e: React.FormEvent) => {
     e.preventDefault();
     onSubmit(state);
-    setState({
-      author: '',
+    setState(prevState => ({
+      ...prevState,
       message: ''
-    })
+    }));
   };
   
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,12 +39,19 @@ const ChatForm: React.FC<Props> = ({isLoading, onSubmit}) => {
       <Grid
         item
         xs
-        sx={{ display: 'grid', gridTemplateColumns: '1fr 2fr 1fr' , gap: 4, backgroundColor: 'white', px: 2, py: 3, borderRadius: 3}}
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: '1fr 2fr 1fr',
+          gap: 4, backgroundColor: 'white',
+          px: 2,
+          py: 3,
+          borderRadius: 3
+        }}
         alignItems="end"
       >
         <Grid
-        item
-        xs
+          item
+          xs
         >
           <TextField
             required
@@ -55,7 +62,7 @@ const ChatForm: React.FC<Props> = ({isLoading, onSubmit}) => {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <AccountCircle />
+                  <AccountCircle/>
                 </InputAdornment>
               ),
             }}
@@ -87,7 +94,7 @@ const ChatForm: React.FC<Props> = ({isLoading, onSubmit}) => {
             variant="contained"
             loading={isLoading}
             disabled={isLoading}
-            sx={{ borderRadius: 5 }}
+            sx={{borderRadius: 5}}
             fullWidth
           >
             Send

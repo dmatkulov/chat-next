@@ -17,8 +17,8 @@ const AppToolbar = () => {
   return (
     <AppBar position="sticky" sx={{mb: 2}}>
       <Toolbar>
-        <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
-          <Link href="/">ChatIn</Link>
+        <Typography variant="h6" component="div" sx={{flexGrow: 1, textAlign: 'center'}}>
+          <Link href="/">...chat</Link>
         </Typography>
       </Toolbar>
     </AppBar>
